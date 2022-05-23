@@ -63,7 +63,7 @@ namespace AvalonDock.Layout.Serialization
 			//fix container panes
 			foreach (var lcToAttach in layout.Descendents().OfType<ILayoutPreviousContainer>().Where(lc => lc.PreviousContainerId != null))
 			{
-				var paneContainerToAttach = layout.Descendents().OfType<ILayoutPaneSerializable>().FirstOrDefault(lps => lps.Id == lcToAttach.PreviousContainerId);
+				var paneContainerToAttach = layout.Descendents().GetFirstOrDefaultOfType<ILayoutPaneSerializable>(lps => lps.Id == lcToAttach.PreviousContainerId);
 				if (paneContainerToAttach == null)
 					throw new ArgumentException($"Unable to find a pane with id ='{lcToAttach.PreviousContainerId}'");
 				lcToAttach.PreviousContainer = paneContainerToAttach as ILayoutContainer;

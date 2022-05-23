@@ -60,13 +60,13 @@ namespace AvalonDock.Controls
 			_manager = manager;
 			_internalSetSelectedDocument = true;
 			SetAnchorables(_manager.Layout.Descendents()
-				.OfType<LayoutAnchorable>()
+				.YieldOfType<LayoutAnchorable>()
 				.Where(a => a.IsVisible)
 				.OrderByDescending(d => d.LastActivationTimeStamp.GetValueOrDefault())
 				.Select(d => (LayoutAnchorableItem)_manager.GetLayoutItemFromModel(d))
 				.ToArray());
 			SetDocuments(_manager.Layout.Descendents()
-				.OfType<LayoutDocument>()
+				.YieldOfType<LayoutDocument>()
 				.OrderByDescending(d => d.LastActivationTimeStamp.GetValueOrDefault())
 				.Select(d => (LayoutDocumentItem)_manager.GetLayoutItemFromModel(d))
 				.ToArray());

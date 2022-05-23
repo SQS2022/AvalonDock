@@ -75,7 +75,7 @@ namespace AvalonDock.Controls
 		protected override void Drop(LayoutDocumentFloatingWindow floatingWindow)
 		{
 			ILayoutDocumentPane targetModel = _targetPane.Model as ILayoutDocumentPane;
-			LayoutDocument documentActive = floatingWindow.Descendents().OfType<LayoutDocument>().FirstOrDefault();
+			LayoutDocument documentActive = floatingWindow.Descendents().GetFirstOrDefaultOfType<LayoutDocument>();
 
 			// ensure paneGroup
 			var paneGroup = targetModel.Parent as LayoutDocumentPaneGroup;

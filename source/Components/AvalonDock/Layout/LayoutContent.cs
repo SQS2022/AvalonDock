@@ -658,7 +658,7 @@ namespace AvalonDock.Layout
 			if (root.LastFocusedDocument != null)
 				newParentPane = root.LastFocusedDocument.Parent as LayoutDocumentPane;
 			else
-				newParentPane = root.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
+				newParentPane = root.Descendents().GetFirstOrDefaultOfType<LayoutDocumentPane>();
 
 			if (newParentPane != null)
 			{

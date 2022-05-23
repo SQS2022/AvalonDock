@@ -210,9 +210,9 @@ namespace AvalonDock.Layout
 			//look for active content parent pane
 			if (root.ActiveContent != null && root.ActiveContent != this) anchorablePane = root.ActiveContent.Parent as LayoutAnchorablePane;
 			//look for a pane on the right side
-			if (anchorablePane == null) anchorablePane = root.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault(pane => !pane.IsHostedInFloatingWindow && pane.GetSide() == AnchorSide.Right);
+			if (anchorablePane == null) anchorablePane = root.Descendents().GetFirstOrDefaultOfType<LayoutAnchorablePane>(pane => !pane.IsHostedInFloatingWindow && pane.GetSide() == AnchorSide.Right);
 			//look for an available pane
-			if (anchorablePane == null) anchorablePane = root.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault();
+			if (anchorablePane == null) anchorablePane = root.Descendents().GetFirstOrDefaultOfType<LayoutAnchorablePane>();
 			var added = false;
 			if (root.Manager.LayoutUpdateStrategy != null)
 				added = root.Manager.LayoutUpdateStrategy.BeforeInsertAnchorable(root, this, anchorablePane);
@@ -387,7 +387,7 @@ namespace AvalonDock.Layout
 				if (top) side = AnchorSide.Top;
 				if (bottom) side = AnchorSide.Bottom;
 
-				var anchorablePane = manager.Layout.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault(p => p.GetSide() == side);
+				var anchorablePane = manager.Layout.Descendents().GetFirstOrDefaultOfType<LayoutAnchorablePane>(p => p.GetSide() == side);
 				if (anchorablePane != null)
 					anchorablePane.Children.Add(this);
 				else

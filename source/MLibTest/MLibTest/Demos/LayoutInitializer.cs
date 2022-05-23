@@ -1,4 +1,4 @@
-﻿namespace MLibTest.Demos
+namespace MLibTest.Demos
 {
 	using System.Linq;
 	using AvalonDock.Layout;

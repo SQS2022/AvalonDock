@@ -401,7 +401,7 @@ namespace AvalonDock.Layout
 						continue;
 
 					//...if this empty pane is not referenced by anyone, then remove it from its parent container
-					if (!this.Descendents().OfType<ILayoutPreviousContainer>().Any(c => c.PreviousContainer == emptyPane))
+					if (!this.Descendents().YieldOfType<ILayoutPreviousContainer>().Any(c => c.PreviousContainer == emptyPane))
 					{
 						var parentGroup = emptyPane.Parent;
 						parentGroup.RemoveChild(emptyPane);
@@ -436,9 +436,9 @@ namespace AvalonDock.Layout
 					{
 						var parentGroup = emptyLayoutDocumentPane.Parent;
 						if (!(parentGroup.Parent is LayoutDocumentFloatingWindow)) continue;
-						var index = RootPanel.IndexOfChild(this.Descendents().OfType<LayoutDocumentPaneGroup>().First());
+						var index = RootPanel.IndexOfChild(this.Descendents().YieldOfType<LayoutDocumentPaneGroup>().First());
 						parentGroup.RemoveChild(emptyLayoutDocumentPane);
-						if (!this.Descendents().OfType<LayoutDocumentPane>().Any())
+						if (!this.Descendents().YieldOfType<LayoutDocumentPane>().Any())
 						{
 							// Now the last Pane container is deleted, at least one is required for documents to be added.
 							// We did not want to keep an empty window floating, but add a new one to the main window
@@ -466,7 +466,7 @@ namespace AvalonDock.Layout
 					//removes any empty anchor group
 					foreach (var emptyLayoutAnchorGroup in this.Descendents().OfType<LayoutAnchorGroup>().Where(p => p.ChildrenCount == 0))
 					{
-						if (!this.Descendents().OfType<ILayoutPreviousContainer>().Any(c => c.PreviousContainer == emptyLayoutAnchorGroup))
+						if (!this.Descendents().YieldOfType<ILayoutPreviousContainer>().Any(c => c.PreviousContainer == emptyLayoutAnchorGroup))
 						{
 							var parentGroup = emptyLayoutAnchorGroup.Parent;
 							parentGroup.RemoveChild(emptyLayoutAnchorGroup);
@@ -549,7 +549,7 @@ namespace AvalonDock.Layout
 			UpdateActiveContentProperty();
 
 #if DEBUG
-			Debug.Assert(!this.Descendents().OfType<LayoutAnchorablePane>().Any(a => a.ChildrenCount == 0 && a.IsVisible));
+			Debug.Assert(!this.Descendents().YieldOfType<LayoutAnchorablePane>().Any(a => a.ChildrenCount == 0 && a.IsVisible));
 			//DumpTree(true);
 #if TRACE
             RootPanel.ConsoleDump(4);
@@ -665,9 +665,9 @@ namespace AvalonDock.Layout
 
 		internal void OnLayoutElementRemoved(LayoutElement element)
 		{
-			if (element.Descendents().OfType<LayoutContent>().Any(c => c == LastFocusedDocument))
+			if (element.Descendents().YieldOfType<LayoutContent>().Any(c => c == LastFocusedDocument))
 				LastFocusedDocument = null;
-			if (element.Descendents().OfType<LayoutContent>().Any(c => c == ActiveContent))
+			if (element.Descendents().YieldOfType<LayoutContent>().Any(c => c == ActiveContent))
 				ActiveContent = null;
 			ElementRemoved?.Invoke(this, new LayoutElementEventArgs(element));
 		}

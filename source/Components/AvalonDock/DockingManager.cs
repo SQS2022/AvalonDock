@@ -1529,7 +1529,7 @@ namespace AvalonDock
 		internal IEnumerable<LayoutAnchorable> GetLayoutAnchorable(LayoutAnchorablePaneGroup layoutAnchPaneGroup)
 		{
 			if (layoutAnchPaneGroup == null) yield break;
-			foreach (var anchorable in layoutAnchPaneGroup.Descendents().OfType<LayoutAnchorable>())
+			foreach (var anchorable in layoutAnchPaneGroup.Descendents().YieldOfType<LayoutAnchorable>())
 				yield return anchorable;
 		}
 
@@ -1726,7 +1726,7 @@ namespace AvalonDock
 			{
 				foreach (var fw in _fwList)
 				{
-					var found = fw.Model.Descendents().OfType<LayoutDocument>().Any(doc => doc == contentModel);
+					var found = fw.Model.Descendents().YieldOfType<LayoutDocument>().Any(doc => doc == contentModel);
 					if (!found) continue;
 					if (fw.Model.Descendents().OfType<LayoutDocument>().Count() + fw.Model.Descendents().OfType<LayoutAnchorable>().Count() == 1)
 						fwc = fw;
@@ -2139,7 +2139,7 @@ namespace AvalonDock
 				documentPane = layout.LastFocusedDocument.Parent as LayoutDocumentPane;
 
 			if (documentPane == null)
-				documentPane = layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
+				documentPane = layout.Descendents().GetFirstOrDefaultOfType<LayoutDocumentPane>();
 
 			//if (documentPane == null)
 			//    throw new InvalidOperationException("Layout must contains at least one LayoutDocumentPane in order to host documents");
@@ -2203,7 +2203,7 @@ namespace AvalonDock
 					}
 					if (documentPane == null)
 					{
-						documentPane = Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
+						documentPane = Layout.Descendents().GetFirstOrDefaultOfType<LayoutDocumentPane>();
 					}
 					//if (documentPane == null)
 					//    throw new InvalidOperationException("Layout must contains at least one LayoutDocumentPane in order to host documents");
@@ -2342,12 +2342,12 @@ namespace AvalonDock
 			if (anchorablePane == null)
 			{
 				//look for a pane on the right side
-				anchorablePane = layout.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault(pane => !pane.IsHostedInFloatingWindow && pane.GetSide() == AnchorSide.Right);
+				anchorablePane = layout.Descendents().GetFirstOrDefaultOfType<LayoutAnchorablePane>(pane => !pane.IsHostedInFloatingWindow && pane.GetSide() == AnchorSide.Right);
 			}
 			if (anchorablePane == null)
 			{
 				//look for an available pane
-				anchorablePane = layout.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault();
+				anchorablePane = layout.Descendents().GetFirstOrDefaultOfType<LayoutAnchorablePane>();
 			}
 			_suspendLayoutItemCreation = true;
 			foreach (var anchorableContentToImport in listOfAnchorablesToImport)
@@ -2420,12 +2420,12 @@ namespace AvalonDock
 					if (anchorablePane == null)
 					{
 						//look for a pane on the right side
-						anchorablePane = Layout.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault(pane => !pane.IsHostedInFloatingWindow && pane.GetSide() == AnchorSide.Right);
+						anchorablePane = Layout.Descendents().GetFirstOrDefaultOfType<LayoutAnchorablePane>(pane => !pane.IsHostedInFloatingWindow && pane.GetSide() == AnchorSide.Right);
 					}
 					if (anchorablePane == null)
 					{
 						//look for an available pane
-						anchorablePane = Layout.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault();
+						anchorablePane = Layout.Descendents().GetFirstOrDefaultOfType<LayoutAnchorablePane>();
 					}
 					_suspendLayoutItemCreation = true;
 					foreach (var anchorableContentToImport in e.NewItems)
@@ -2502,9 +2502,8 @@ namespace AvalonDock
 
 		private void InternalSetActiveContent(object contentObject)
 		{
-			// BugFix for first issue in #59
-			var list = Layout.Descendents().OfType<LayoutContent>().ToList();
-			var layoutContent = list.FirstOrDefault(lc => lc == contentObject || lc.Content == contentObject);
+			// BugFix for first issue in #59		
+			var layoutContent = Layout.Descendents().GetFirstOrDefaultOfType<LayoutContent>(lc => lc == contentObject || lc.Content == contentObject);
 			_insideInternalSetActiveContent = true;
 			Layout.ActiveContent = layoutContent;
 			_insideInternalSetActiveContent = false;

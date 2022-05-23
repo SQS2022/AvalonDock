@@ -1,4 +1,4 @@
-﻿/************************************************************************
+/************************************************************************
    AvalonDock
 
    Copyright (C) 2007-2013 Xceed Software Inc.
@@ -124,6 +124,35 @@ namespace AvalonDock
 				thickness.Top + other.Top,
 				thickness.Right + other.Right,
 				thickness.Bottom + other.Bottom);
+		}
+
+		public static T GetFirstOrDefaultOfType<T>(this IEnumerable aList)
+		{
+			foreach (var item in aList)
+			{
+				if(item is T)
+					return (T)item;
+			}
+			return default(T);
+		}
+
+		public static T GetFirstOrDefaultOfType<T>(this IEnumerable aList, Func<T, bool> aFilter)
+		{
+			foreach (var item in aList)
+			{
+				if ((item is T casted) && (aFilter?.Invoke(casted) ?? false))
+					return casted;
+			}
+			return default(T);
+		}
+
+		public static IEnumerable<T> YieldOfType<T>(this IEnumerable aList)
+		{
+			foreach (var item in aList)
+			{
+				if(item is T casted)
+					yield return casted;
+			}
 		}
 	}
 }

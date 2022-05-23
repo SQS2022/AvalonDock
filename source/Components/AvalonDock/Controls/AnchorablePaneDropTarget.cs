@@ -1,4 +1,4 @@
-﻿/************************************************************************
+/************************************************************************
    AvalonDock
 
    Copyright (C) 2007-2013 Xceed Software Inc.
@@ -73,7 +73,7 @@ namespace AvalonDock.Controls
 		protected override void Drop(LayoutAnchorableFloatingWindow floatingWindow)
 		{
 			ILayoutAnchorablePane targetModel = _targetPane.Model as ILayoutAnchorablePane;
-			LayoutAnchorable anchorableActive = floatingWindow.Descendents().OfType<LayoutAnchorable>().FirstOrDefault();
+			LayoutAnchorable anchorableActive = floatingWindow.Descendents().GetFirstOrDefaultOfType<LayoutAnchorable>();
 
 			switch (Type)
 			{

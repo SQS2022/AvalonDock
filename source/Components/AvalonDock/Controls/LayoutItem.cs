@@ -1,4 +1,4 @@
-﻿/************************************************************************
+/************************************************************************
    AvalonDock
 
    Copyright (C) 2007-2013 Xceed Software Inc.
@@ -407,7 +407,7 @@ namespace AvalonDock.Controls
 		{
 			var root = LayoutElement?.Root;
 			if (root == null) return false;
-			return LayoutElement.Root.Manager.Layout.Descendents().OfType<LayoutContent>().Any(d => d != LayoutElement && (d.Parent is LayoutDocumentPane || d.Parent is LayoutDocumentFloatingWindow));
+			return LayoutElement.Root.Manager.Layout.Descendents().YieldOfType<LayoutContent>().Any(d => d != LayoutElement && (d.Parent is LayoutDocumentPane || d.Parent is LayoutDocumentFloatingWindow));
 		}
 
 		private void ExecuteCloseAllButThisCommand(object parameter) => LayoutElement.Root.Manager.ExecuteCloseAllButThisCommand(LayoutElement);
@@ -443,7 +443,7 @@ namespace AvalonDock.Controls
 		{
 			var root = LayoutElement?.Root;
 			if (root == null) return false;
-			return LayoutElement.Root.Manager.Layout.Descendents().OfType<LayoutContent>().Any(d => d.Parent is LayoutDocumentPane || d.Parent is LayoutDocumentFloatingWindow);
+			return LayoutElement.Root.Manager.Layout.Descendents().YieldOfType<LayoutContent>().Any(d => d.Parent is LayoutDocumentPane || d.Parent is LayoutDocumentFloatingWindow);
 		}
 
 		private void ExecuteCloseAllCommand(object parameter) => LayoutElement.Root.Manager.ExecuteCloseAllCommand(LayoutElement);

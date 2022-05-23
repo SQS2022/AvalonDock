@@ -122,7 +122,7 @@ namespace AvalonDock.Controls
 				case Win32Helper.WM_NCLBUTTONDOWN: //Left button down on title -> start dragging over docking manager
 					if (wParam.ToInt32() == Win32Helper.HT_CAPTION)
 					{
-						LayoutDocumentPane layoutDocumentPane = _model.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault(p => p.ChildrenCount > 0 && p.SelectedContent != null);
+						LayoutDocumentPane layoutDocumentPane = _model.Descendents().GetFirstOrDefaultOfType<LayoutDocumentPane>(p => p.ChildrenCount > 0 && p.SelectedContent != null);
 						if (layoutDocumentPane != null)
 						{
 							layoutDocumentPane.SelectedContent.IsActive = true;
@@ -323,7 +323,7 @@ namespace AvalonDock.Controls
 		internal IEnumerable<LayoutAnchorable> GetLayoutAnchorable(LayoutAnchorablePaneGroup layoutAnchPaneGroup)
 		{
 			if (layoutAnchPaneGroup == null) yield break;
-			foreach (var anchorable in layoutAnchPaneGroup.Descendents().OfType<LayoutAnchorable>())
+			foreach (var anchorable in layoutAnchPaneGroup.Descendents().YieldOfType<LayoutAnchorable>())
 				yield return anchorable;
 		}
 

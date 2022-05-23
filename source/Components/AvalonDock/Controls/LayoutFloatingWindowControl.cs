@@ -556,7 +556,7 @@ namespace AvalonDock.Controls
 			_hwndSrcHook = FilterMessage;
 			_hwndSrc.AddHook(_hwndSrcHook);
 			// Restore maximize state
-			var maximized = Model.Descendents().OfType<ILayoutElementForFloatingWindow>().Any(l => l.IsMaximized);
+			var maximized = Model.Descendents().YieldOfType<ILayoutElementForFloatingWindow>().Any(l => l.IsMaximized);
 			UpdateMaximizedState(maximized);
 		}
 
@@ -590,7 +590,7 @@ namespace AvalonDock.Controls
 
 		private void OnSizeChanged(object sender, SizeChangedEventArgs e)
 		{
-			foreach (var posElement in Model.Descendents().OfType<ILayoutElementForFloatingWindow>())
+			foreach (var posElement in Model.Descendents().YieldOfType<ILayoutElementForFloatingWindow>())
 			{
 				posElement.FloatingWidth = ActualWidth;
 				posElement.FloatingHeight = ActualHeight;
@@ -630,7 +630,7 @@ namespace AvalonDock.Controls
 
 		private void UpdatePositionAndSizeOfPanes()
 		{
-			foreach (var posElement in Model.Descendents().OfType<ILayoutElementForFloatingWindow>())
+			foreach (var posElement in Model.Descendents().YieldOfType<ILayoutElementForFloatingWindow>())
 			{
 				posElement.FloatingLeft = Left;
 				posElement.FloatingTop = Top;
@@ -642,7 +642,7 @@ namespace AvalonDock.Controls
 
 		private void UpdateMaximizedState(bool isMaximized)
 		{
-			foreach (var posElement in Model.Descendents().OfType<ILayoutElementForFloatingWindow>())
+			foreach (var posElement in Model.Descendents().YieldOfType<ILayoutElementForFloatingWindow>())
 				posElement.IsMaximized = isMaximized;
 			IsMaximized = isMaximized;
 			_isInternalChange = true;

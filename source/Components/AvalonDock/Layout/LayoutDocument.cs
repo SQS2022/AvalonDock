@@ -1,4 +1,4 @@
-﻿/************************************************************************
+/************************************************************************
    AvalonDock
 
    Copyright (C) 2007-2013 Xceed Software Inc.
@@ -122,7 +122,7 @@ namespace AvalonDock.Layout
 			var root = Root as LayoutRoot;
 			LayoutDocumentPane documentPane = null;
 			if (root?.LastFocusedDocument != null && root.LastFocusedDocument != this) documentPane = root.LastFocusedDocument.Parent as LayoutDocumentPane;
-			if (documentPane == null) documentPane = root.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
+			if (documentPane == null) documentPane = root.Descendents().GetFirstOrDefaultOfType<LayoutDocumentPane>();
 			var added = false;
 			if (root?.Manager.LayoutUpdateStrategy != null) added = root.Manager.LayoutUpdateStrategy.BeforeInsertDocument(root, this, documentPane);
 			if (!added)
